@@ -1,6 +1,5 @@
 const movieCollection = require("../model/movies");
 const { ObjectId } = require('mongodb');
-const express = require('express');
 
 const handleGetAllMovies = async (req, res) => {
     const query = {};
@@ -15,12 +14,15 @@ const handleGetAllMoviesById = async (req, res) => {
 }
 const createMovie = async (req, res) => {
     const queryEmail = req.query.email
-    const movie = req.body
+    const body = req.body
+    if (!body || !body.movie || body.runtime || !body.actors || !body.crew || !body.rating) {
+        return res.status(400).send({ message: 'All fields required' })
+    }
     const userEmail = req.user.email
     if (queryEmail !== userEmail) {
         return res.status(403).send({ message: 'Access Forbidden' })
     }
-    const createMovie = await movieCollection.insertOne(movie);
+    const createMovie = await movieCollection.insertOne(body);
     res.send(createMovie);
 }
 module.exports = { handleGetAllMovies, handleGetAllMoviesById, createMovie }
