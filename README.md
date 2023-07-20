@@ -1,4 +1,4 @@
-# SS-BACKEND-TASK-MD-Zahid-Hasan
+# Movie Server API with authentication
 API : **https://movie-server-two.vercel.app/**
 
 Endpoints:
